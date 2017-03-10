@@ -19,7 +19,7 @@ public class APIStore {
      * 第几页：数字，大于0
      */
     public interface WelfareService {
-        @GET("{type}/50/8")
+        @GET("{type}/10/6")
         Call<CarrierWelfare> getWelfareList(@Path("type") String type);
     }
 }
