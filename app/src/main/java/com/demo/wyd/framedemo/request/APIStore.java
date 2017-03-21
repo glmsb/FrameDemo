@@ -2,6 +2,8 @@ package com.demo.wyd.framedemo.request;
 
 import com.demo.wyd.framedemo.carrier.CarrierWelfare;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -19,7 +21,13 @@ public class APIStore {
      * 第几页：数字，大于0
      */
     public interface WelfareService {
-        @GET("{type}/10/6")
+        @GET("{type}/12/10")
         Call<CarrierWelfare> getWelfareList(@Path("type") String type);
+
+        @GET("{type}/12/10")
+        Flowable<CarrierWelfare> getWelfare(@Path("type") String type);
+
+        @GET("{type}/12/10")
+        Observable<CarrierWelfare> getWelfares(@Path("type") String type);
     }
 }

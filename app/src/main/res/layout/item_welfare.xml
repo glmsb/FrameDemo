@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
@@ -9,7 +9,6 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
         android:scaleType="fitCenter"
         android:contentDescription="@string/app_name" />
 
@@ -20,5 +19,6 @@
         android:layout_marginTop="30dp"
         android:textSize="17sp"
         android:layout_gravity="center_horizontal"
-        android:text="who" />
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:text="who" />
 </LinearLayout>
