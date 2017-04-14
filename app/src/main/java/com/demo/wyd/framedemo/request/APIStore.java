@@ -24,8 +24,8 @@ public class APIStore {
         @GET("{type}/12/10")
         Call<CarrierWelfare> getWelfareList(@Path("type") String type);
 
-        @GET("{type}/12/10")
-        Flowable<CarrierWelfare> getWelfare(@Path("type") String type);
+        @GET("{type}/12/{page}")
+        Flowable<CarrierWelfare> getWelfare(@Path("type") String type,@Path("page") int page);
 
         @GET("{type}/12/10")
         Observable<CarrierWelfare> getWelfares(@Path("type") String type);

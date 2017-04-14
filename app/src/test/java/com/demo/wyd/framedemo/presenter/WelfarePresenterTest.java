@@ -52,7 +52,7 @@ public class WelfarePresenterTest {
     @Test
     public void gainWelfare() throws Exception {
         APIStore.WelfareService welfareService = RequestEngine.getInstance().create(APIStore.WelfareService.class);
-        welfareService.getWelfare(path)
+        welfareService.getWelfare(path,10)
                 .map(new Function<CarrierWelfare, List<Welfare>>() {
                     @Override
                     public List<Welfare> apply(@NonNull CarrierWelfare carrierWelfare) throws Exception {

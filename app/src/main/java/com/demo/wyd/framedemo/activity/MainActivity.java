@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements IViewWelfare {
         tvGain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new WelfarePresenter(getBaseContext(), MainActivity.this).gainWelfare();
+                new WelfarePresenter(getBaseContext(), MainActivity.this).gainWelfare("福利",10);
             }
         });
     }

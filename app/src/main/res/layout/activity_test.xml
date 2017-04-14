@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.demo.wyd.refreshandload.view.RLLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.demo.wyd.framedemo.activity.TestActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_testRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.demo.wyd.refreshandload.view.RLLayout>

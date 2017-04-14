@@ -31,7 +31,7 @@ public class WelfarePresenter extends BasePresenter {
         this.iViewWelfare = iViewWelfare;
     }
 
-    public void gainWelfare() {
+    public void gainWelfare(String type, int pageNo) {
         APIStore.WelfareService welfareService = RequestEngine.getInstance().create(APIStore.WelfareService.class);
        /* Call<CarrierWelfare> welfareCall = welfareService.getWelfareList("福利");
         welfareCall.enqueue(new Callback<CarrierWelfare>() {
@@ -48,7 +48,7 @@ public class WelfarePresenter extends BasePresenter {
         });*/
 
 
-        welfareService.getWelfare("福利")
+        welfareService.getWelfare(type, pageNo)
                 .subscribeOn(Schedulers.io())
                 .map(new Function<CarrierWelfare, List<Welfare>>() {
                     @Override
