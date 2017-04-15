@@ -21,6 +21,7 @@ import com.demo.wyd.refreshandload.listener.OnPushLoadMoreListener;
 public class DefaultFooter extends FrameLayout implements OnPushLoadMoreListener {
     private TextView text;
     private ImageView imageView;
+    private boolean isLoadOver;
 
     public DefaultFooter(@NonNull Context context) {
         this(context, null);
@@ -35,10 +36,12 @@ public class DefaultFooter extends FrameLayout implements OnPushLoadMoreListener
 
     @Override
     public void onLoadMore() {
+        if (isLoadOver)
+            return;
         text.setText("努力加载中...");
-        imageView.setImageResource(R.drawable.ic_launcher);
+        imageView.setImageResource(R.mipmap.ic_refreshing_loading);
         ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360f);
-        animator.setDuration(3000);
+        animator.setDuration(500);
         animator.start();
     }
 
@@ -49,8 +52,17 @@ public class DefaultFooter extends FrameLayout implements OnPushLoadMoreListener
 
     @Override
     public void onPushEnable(boolean enable) {
-        text.setText(enable ? "释放以加载" : "上来加载");
-        imageView.setImageResource(R.mipmap.iconfont_downgrey);
+        if (isLoadOver)
+            return;
+        imageView.setVisibility(VISIBLE);
+        text.setText(enable ? "释放以加载" : "上拉加载");
+        imageView.setImageResource(R.mipmap.ic_refresh_load);
         imageView.setRotation(enable ? 0 : 180);
+    }
+
+    public void setLoadOver(boolean isLoadOver) {
+        this.isLoadOver = isLoadOver;
+        text.setText("已加载全部");
+        imageView.setVisibility(GONE);
     }
 }

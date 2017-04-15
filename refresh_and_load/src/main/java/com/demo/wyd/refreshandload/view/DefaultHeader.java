@@ -36,9 +36,9 @@ public class DefaultHeader extends FrameLayout implements OnPullRefreshListener 
     @Override
     public void onRefresh() {
         text.setText("努力刷新中...");
-        imageView.setImageResource(R.drawable.ic_launcher);
+        imageView.setImageResource(R.mipmap.ic_refreshing_loading);
         ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360f);
-        animator.setDuration(3000);
+        animator.setDuration(500);
         animator.start();
     }
 
@@ -50,7 +50,7 @@ public class DefaultHeader extends FrameLayout implements OnPullRefreshListener 
     @Override
     public void onPullEnable(boolean enable) {
         text.setText(enable ? "释放以刷新" : "下拉刷新");
-        imageView.setImageResource(R.mipmap.iconfont_downgrey);
+        imageView.setImageResource(R.mipmap.ic_refresh_load);
         imageView.setRotation(enable ? 180 : 0);
     }
 }

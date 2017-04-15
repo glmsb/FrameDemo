@@ -55,12 +55,14 @@ public class WelfarePresenter extends BasePresenter {
                     public List<Welfare> apply(@NonNull CarrierWelfare carrierWelfare) throws Exception {
                         return carrierWelfare.getResults();
                     }
-                }).filter(new Predicate<List<Welfare>>() {
-            @Override
-            public boolean test(@NonNull List<Welfare> welfares) throws Exception {
-                return welfares != null && welfares.size() > 0;
-            }
-        }).observeOn(AndroidSchedulers.mainThread())
+                })
+                .filter(new Predicate<List<Welfare>>() {
+                    @Override
+                    public boolean test(@NonNull List<Welfare> welfares) throws Exception {
+                        return welfares != null && welfares.size() > 0;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Welfare>>() {
                     @Override
                     public void accept(@NonNull List<Welfare> welfares) throws Exception {

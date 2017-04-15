@@ -24,7 +24,7 @@ public class TestActivity extends Activity implements IViewWelfare {
     private RecyclerView recyclerView;
     private RLLayout rlLayout;
     private List<Welfare> list;
-
+    private int limit = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,11 @@ public class TestActivity extends Activity implements IViewWelfare {
 
             @Override
             public void doLoad() {
-                new WelfarePresenter(TestActivity.this, TestActivity.this).gainWelfare("福利", 3);
+                if (list.size() < limit)
+                    new WelfarePresenter(TestActivity.this, TestActivity.this).gainWelfare("福利", 3);
+                else {
+                    rlLayout.setLoadOver();
+                }
             }
         });
     }
@@ -58,13 +62,14 @@ public class TestActivity extends Activity implements IViewWelfare {
         if (rlLayout.isRefresh()) {
             list.clear();
         }
-        list.addAll(welfareList);
+        list.add(welfareList.get(0));
+        list.add(welfareList.get(1));
 
         if (adapter == null) {
             adapter = new WelfareAdapter(this, list);
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.notifyItemRangeChanged(0, list.size());
+            adapter.notifyDataSetChanged();
         }
     }
 }

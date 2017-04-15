@@ -39,7 +39,7 @@ import com.demo.wyd.refreshandload.listener.OperationListener;
  */
 
 public class RLLayout extends ViewGroup {
-    private static final String LOG_TAG = "RLLayout1";
+    private static final String LOG_TAG = "RLLayout";
     private static final int HEADER_FOOTER_HEIGHT = 50;// 头部和底部的高度 (dp)
 
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
@@ -57,7 +57,7 @@ public class RLLayout extends ViewGroup {
     private View mTarget;
     private OnPullRefreshListener mOnPullRefreshListener;// 下拉刷新listener
     private OnPushLoadMoreListener mOnPushLoadMoreListener;// 上拉加载更多
-    private OperationListener operationListener;
+    private OperationListener mOperationListener;
 
     private boolean mRefreshing = false;
     private boolean mLoadMore = false;
@@ -243,8 +243,7 @@ public class RLLayout extends ViewGroup {
         if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
             mReturningToStart = false;
         }
-        if (!isEnabled() || mReturningToStart || mRefreshing || mLoadMore
-                || (!isChildScrollToTop() && !isChildScrollToBottom())) {
+        if (!isEnabled() || mReturningToStart || mRefreshing || mLoadMore || (!isChildScrollToTop() && !isChildScrollToBottom())) {
             // 如果子View可以滑动，不拦截事件，交给子View处理-下拉刷新
             // 或者子View没有滑动到底部不拦截事件-上拉加载更多
             return false;
@@ -594,12 +593,11 @@ public class RLLayout extends ViewGroup {
                 }
                 break;
             }
-            case MotionEventCompat.ACTION_POINTER_DOWN: {
+            case MotionEventCompat.ACTION_POINTER_DOWN:
                 final int index = MotionEventCompat.getActionIndex(ev);
 //                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
                 mActivePointerId = ev.getPointerId(index);
                 break;
-            }
 
             case MotionEventCompat.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
@@ -650,14 +648,13 @@ public class RLLayout extends ViewGroup {
         valueAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (end > 0 && mOnPushLoadMoreListener != null && operationListener != null) {
+                if (end > 0 && mOnPushLoadMoreListener != null && mOperationListener != null) {
                     // start loading more
                     mLoadMore = true;
                     mOnPushLoadMoreListener.onLoadMore();
 
                     //TODO: 2017/4/14
-                    operationListener.doLoad();
-
+                    mOperationListener.doLoad();
                 } else {
                     resetTargetLayout();
                     mLoadMore = false;
@@ -720,8 +717,8 @@ public class RLLayout extends ViewGroup {
                         mOnPullRefreshListener.onRefresh();
 
                         // TODO: 2017/4/14
-                        if (operationListener != null) {
-                            operationListener.doRefresh();
+                        if (mOperationListener != null) {
+                            mOperationListener.doRefresh();
                         }
                     }
                 }
@@ -880,6 +877,7 @@ public class RLLayout extends ViewGroup {
      * 是否滑动到底部
      */
     public boolean isChildScrollToBottom() {
+        // TODO: 2017/4/15  // return ViewCompat.canScrollVertically(mTarget, -1);
         if (isChildScrollToTop()) {
             return false;
         }
@@ -910,7 +908,14 @@ public class RLLayout extends ViewGroup {
                 return false;
             }
             int lastPos = absListView.getLastVisiblePosition();
-            return lastPos > 0 && count > 0 && lastPos == count - 1;
+            if (lastPos > 0 && count > 0 && lastPos == count - 1) {
+                View item = absListView.getChildAt(lastPos - firstPos);
+                //重要修改！！！必须考虑SuperSwipeRefreshLayout本身的footer
+                if (item.getBottom() <= getBottom()) {
+                    return true;
+                }
+            }
+            return false;
         } else if (mTarget instanceof ScrollView) {
             ScrollView scrollView = (ScrollView) mTarget;
             View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
@@ -1040,12 +1045,27 @@ public class RLLayout extends ViewGroup {
     }
 
     /**
+     * 已经加载全部数据是需要设置
+     */
+    public void setLoadOver() {
+        //已经全部加载完毕
+        if (mOnPushLoadMoreListener != null) {
+            ((DefaultFooter) mOnPushLoadMoreListener).setLoadOver(true);
+            setLoadMore(false);
+        }
+    }
+
+    /**
      * 判断当前操作是下拉刷新还是上拉加载
      *
      * @return 这里简单的用true 代表刷新，false 代表加载
      */
     public boolean isRefresh() {
         if (mRefreshing) {
+            //用于重置上拉加载
+            if (mOnPushLoadMoreListener != null) {
+                ((DefaultFooter) mOnPushLoadMoreListener).setLoadOver(false);
+            }
             setRefreshing(false);
             return true;
         }
@@ -1063,10 +1083,11 @@ public class RLLayout extends ViewGroup {
     /**
      * 用于在上下拉的过程中发起网络请求等操作，
      * 在操作结束之后需要手动调用{@link RLLayout#isRefresh()}判断属于什么上拉还是下拉，最终结束整个操作，还原UI
+     *
      * @param listener 需要操作的接口
      */
     public void sentRequest(OperationListener listener) {
-        operationListener = listener;
+        mOperationListener = listener;
     }
 
 
