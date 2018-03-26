@@ -1,6 +1,10 @@
 package com.demo.wyd.framedemo.request;
 
+import com.demo.wyd.framedemo.bean.Welfare;
 import com.demo.wyd.framedemo.carrier.CarrierWelfare;
+import com.demo.wyd.framedemo.model.BaseResponse;
+
+import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -9,7 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * Description:
+ * Description:用于描述网络请求的接口的设置
  * Created by wyd on 2017/2/21.
  */
 
@@ -25,7 +29,7 @@ public class APIStore {
         Call<CarrierWelfare> getWelfareList(@Path("type") String type);
 
         @GET("{type}/12/{page}")
-        Flowable<CarrierWelfare> getWelfare(@Path("type") String type,@Path("page") int page);
+        Flowable<BaseResponse<List<Welfare>>> getWelfare(@Path("type") String type, @Path("page") int page);
 
         @GET("{type}/12/10")
         Observable<CarrierWelfare> getWelfares(@Path("type") String type);

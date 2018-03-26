@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.demo.wyd.framedemo.R;
 import com.demo.wyd.framedemo.bean.Welfare;
 
@@ -38,7 +39,6 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Welfare welfare = welfareList.get(position);
         Glide.with(mContext).load(welfare.getUrl())
-                .crossFade()
                 .into(holder.imvWelfare);
         holder.tvName.setText(welfare.getWho());
     }

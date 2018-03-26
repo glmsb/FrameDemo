@@ -31,11 +31,11 @@ public class TestActivity extends Activity implements IViewWelfare {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         list = new ArrayList<>();
-        new WelfarePresenter(getBaseContext(), this).gainWelfare("福利", 10);
+        new WelfarePresenter(this, this).gainWelfare("福利", 10);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_testRL);
+        recyclerView = findViewById(R.id.rv_testRL);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        rlLayout = (RLLayout) findViewById(R.id.rl_layout);
+        rlLayout = findViewById(R.id.rl_layout);
         DefaultHeader header = new DefaultHeader(this);
         DefaultFooter footer = new DefaultFooter(this);
         rlLayout.setHeaderView(header);
