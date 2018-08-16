@@ -1,6 +1,7 @@
 package com.demo.wyd.framedemo.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.demo.wyd.framedemo.R;
 import com.demo.wyd.framedemo.bean.Welfare;
 
@@ -29,17 +29,17 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.ViewHold
         this.welfareList = welfareList;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_welfare, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Welfare welfare = welfareList.get(position);
-        Glide.with(mContext).load(welfare.getUrl())
-                .into(holder.imvWelfare);
+        Glide.with(mContext).load(welfare.getUrl()).into(holder.imvWelfare);
         holder.tvName.setText(welfare.getWho());
     }
 
@@ -48,14 +48,14 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.ViewHold
         return welfareList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imvWelfare;
         private TextView tvName;
 
         ViewHolder(View itemView) {
             super(itemView);
-            imvWelfare = (ImageView) itemView.findViewById(R.id.imageView);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
+            imvWelfare = itemView.findViewById(R.id.imageView);
+            tvName = itemView.findViewById(R.id.tv_name);
         }
     }
 }

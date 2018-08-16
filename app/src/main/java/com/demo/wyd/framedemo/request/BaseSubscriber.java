@@ -2,7 +2,6 @@ package com.demo.wyd.framedemo.request;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -27,7 +26,6 @@ public abstract class BaseSubscriber<T> implements FlowableSubscriber<BaseRespon
     protected BaseSubscriber(Context mContext, boolean showProgress) {
         if (showProgress) {
              progressDialog = ProgressDialog.show(mContext, "请稍后", "正在努力加载...", true);
-//            progressDialog = new ProgressDialog(mContext);
             progressDialog.setOnCancelListener(dialogInterface -> subscription.cancel());
         }
     }

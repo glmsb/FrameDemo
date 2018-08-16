@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements IViewWelfare {
         init();
 
         tvGain.setOnClickListener(v ->
+                //这里持有presenter的引用，把参数传到presenter进行网络请求
                 new WelfarePresenter(MainActivity.this, MainActivity.this).gainWelfare("福利", 10));
         btnPush.setOnClickListener(v ->
                 ActivityUtils.startActivity(TestActivity.class));

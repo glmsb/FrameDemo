@@ -18,6 +18,9 @@ import com.demo.wyd.refreshandload.view.RLLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 测试上下拉刷新框架的页面
+ */
 public class TestActivity extends Activity implements IViewWelfare {
 
     private WelfareAdapter adapter;

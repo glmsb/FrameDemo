@@ -30,8 +30,8 @@ public class DefaultFooter extends FrameLayout implements OnPushLoadMoreListener
     public DefaultFooter(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.v_refresh_headerer, this);
-        text = ((TextView) findViewById(R.id.tv_header));
-        imageView = (ImageView) findViewById(R.id.imv_header);
+        text = findViewById(R.id.tv_header);
+        imageView = findViewById(R.id.imv_header);
     }
 
     @Override
